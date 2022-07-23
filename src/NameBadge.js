@@ -1,4 +1,7 @@
 import React from 'react'
+import BadgeComponent from './BadgeComponent'
+
+
 
 export default function NameBadge() {
     
@@ -12,24 +15,16 @@ export default function NameBadge() {
         comments: ""
     })
 
-    const [badge, setBadge] = React.useState({
-        fName: "",
-        lName: "",
-        phone: "",
-        birthplace: "",
-        email: "",
-        favoriteFood: "",
-        comments: ""
-    })
+    const [badges, setBadges] = React.useState([])
 
 
     const initState = {
-        firstName: "",
-        lastName: "",
+        fName: "",
+        lName: "",
         email: "",
         phone: "",
-        placeOfBirth: "",
-        food: "",
+        birthplace: "",
+        favoriteFood: "",
         comments: ""
     }
 
@@ -53,104 +48,102 @@ export default function NameBadge() {
 
     function handleSubmit(event) {
         event.preventDefault()
-        setBadge(prevData => {
-            return [
-            ...prevData,
-            badgeData
-            ]
-        })
-        setBadge(initState)
+        setBadges(prevBadgeData =>
+            [...prevBadgeData,
+            badgeData])
+        setBadgeData(initState)
+        console.log(badges)
+        
     }
 
-    
-    
+    const mapBadge = badges.map((data, index) => {
+        return (
+            <BadgeComponent
+                {...data}
+                key={index}
+            />
+
+        )
+    })
+
     return (
         <>
             <div className="form--container">
-
-                <input 
-                    type="text" 
-                    placeholder="First Name"
-                    className="form--input"
-                    name="fName"
-                    onChange={handleChange}
-                    value={badgeData.fName}
-                    minLength={3}
-                    required                      
-                    />
-                <input 
-                    type="text" 
-                    placeholder="Last Name"
-                    className="form--input"
-                    name="lName"
-                    onChange={handleChange}
-                    value={badgeData.lName}
-                    minLength={3}
-                    required                      
-                    />
-                <input 
-                    type="email"
-                    placeholder="Email"
-                    className="form--input"
-                    name="email"
-                    onChange={handleChange}
-                    value={badgeData.email}
-                    minLength={3}
-                    required                    
-                />
-                <input 
-                    type="number"
-                    placeholder="Phone Number"
-                    className="form--input"
-                    name="phone"
-                    onChange={handleChange}
-                    value={badgeData.phone}
-                    minLength={3}
-                    required                    
-                />
-                <input 
-                    type="text" 
-                    placeholder="Place of Birth"
-                    className="form--input"
-                    name="birthplace"
-                    onChange={handleChange}
-                    value={badgeData.birthplace}
-                    minLength={3}
-                    required                    
-                />
+                <form onSubmit={handleSubmit}>
                     <input 
-                    type="text" 
-                    placeholder="Favorite Food"
-                    className="form--input"
-                    name="favoriteFood"
-                    onChange={handleChange}
-                    value={badgeData.favoriteFood}
-                    minLength={3}
-                    required                    
-                />
-                <input
-                    type="text" 
-                    placeholder="Comment"
-                    className="form--comments"
-                    name="comments"
-                    onChange={handleChange}
-                    value={badgeData.comments}
-                    minLength={3}
-                    required                    
-                />
-                <SubmitButton />
-
+                        type="text" 
+                        placeholder="First Name"
+                        className="form--input"
+                        name="fName"
+                        onChange={handleChange}
+                        value={badgeData.fName}
+                        minLength={3}
+                        required                      
+                        />
+                    <input 
+                        type="text" 
+                        placeholder="Last Name"
+                        className="form--input"
+                        name="lName"
+                        onChange={handleChange}
+                        value={badgeData.lName}
+                        minLength={3}
+                        required                      
+                        />
+                    <input 
+                        type="email"
+                        placeholder="Email"
+                        className="form--input"
+                        name="email"
+                        onChange={handleChange}
+                        value={badgeData.email}
+                        minLength={3}
+                        required                    
+                    />
+                    <input 
+                        type="number"
+                        placeholder="Phone Number"
+                        className="form--input"
+                        name="phone"
+                        onChange={handleChange}
+                        value={badgeData.phone}
+                        minLength={3}
+                        required                    
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="Place of Birth"
+                        className="form--input"
+                        name="birthplace"
+                        onChange={handleChange}
+                        value={badgeData.birthplace}
+                        minLength={3}
+                        required                    
+                    />
+                        <input 
+                        type="text" 
+                        placeholder="Favorite Food"
+                        className="form--input"
+                        name="favoriteFood"
+                        onChange={handleChange}
+                        value={badgeData.favoriteFood}
+                        minLength={3}
+                        required                    
+                    />
+                    <input
+                        type="text" 
+                        placeholder="Comment"
+                        className="form--comments"
+                        name="comments"
+                        onChange={handleChange}
+                        value={badgeData.comments}
+                        minLength={3}
+                        required                    
+                    />
+                    <SubmitButton />
+                </form>
             </div>
-
-
-            <div className="badge--container">
-                <p>Name: {badgeData.fName} {badgeData.lName}</p>
-                <p>Phone: {badgeData.phone}</p>
-                <p>Place of Birth: {badgeData.birthplace}</p>
-                <p>Email: {badgeData.email}</p>
-                <p>Favorite Food: {badgeData.favoriteFood}</p>
-                <p>Comments: {badgeData.comments}</p>
-            </div>
+            {mapBadge}
         </>
     )
 }
